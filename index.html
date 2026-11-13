@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Moon Alquimia | Cosméticos Naturais & Rituais Artesanais</title>
+
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Cormorant Garamond (Títulos) e Plus Jakarta Sans (Textos) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons via CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Configuração personalizada do Tailwind para a paleta feminina creme & rosé da Moon Alquimia -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+                    },
+                    colors: {
+                        cream: {
+                            50: '#FFFDF9',  // Superfícies / Cards
+                            100: '#FAF6F0', // Fundo principal creme acolhedor
+                            200: '#F2EAE0', // Bordas suaves e fundos secundários
+                            300: '#E5D8C8',
+                        },
+                        rosewood: {
+                            50: '#FDF6F7',
+                            100: '#F8E7EA',
+                            200: '#EFCBD2',
+                            400: '#CC8493',
+                            500: '#B56576', // Rosé antigo principal
+                            600: '#9E4F60', // Hover / Destaque intenso
+                            700: '#823D4C',
+                        },
+                        sage: {
+                            50: '#F4F7F4',
+                            100: '#E4ECE4',
+                            500: '#6B7F6A', // Verde sálvia suave
+                            700: '#4E5F4D',
+                        },
+                        gold: {
+                            400: '#DFB78C',
+                            500: '#D4A373', // Dourado areia delicado
+                        },
+                        cocoa: {
+                            700: '#5C4B48',
+                            800: '#3A2E2C', // Texto escuro suave
+                            900: '#261D1C',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Suavização de rolagem e barra discreta */
+        html {
+            scroll-behavior: smooth;
+        }
+        ::-webkit-scrollbar {
+            width: 7px;
+            height: 7px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF6F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D8C5B8;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B56576;
+        }
+        /* Animação sutil para a sacola lateral */
+        .drawer-transition {
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+    </style>
+</head>
+<body class="bg-cream-100 text-cocoa-800 font-sans min-h-screen flex flex-col selection:bg-rosewood-500 selection:text-white">
+
+    <!-- Notificações Flutuantes (Toast) -->
+    <div id="toast-container" class="fixed top-4 right-4 z-50 flex flex-col gap-2 max-w-xs sm:max-w-sm w-full pointer-events-none px-4 sm:px-0"></div>
+
+    <!-- ===================================================================== -->
+    <!-- CABEÇALHO SENSORIAL COM LOGO CENTRALIZADO                             -->
+    <!-- ===================================================================== -->
+    <header class="bg-cream-50/90 border-b border-cream-200 backdrop-blur-md sticky top-0 z-30 shadow-2xs">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-3">
+            <!-- Botão Quiz Consultor (Esquerda) -->
+            <button onclick="openQuizModal()" class="inline-flex items-center gap-2 px-3.5 py-2 rounded-full bg-rosewood-50 hover:bg-rosewood-100 text-rosewood-600 border border-rosewood-200 text-xs sm:text-sm font-semibold transition cursor-pointer">
+                <i data-lucide="sparkles" class="w-4 h-4 text-rosewood-500"></i>
+                <span class="hidden sm:inline">Descubra seu Ritual</span>
+                <span class="sm:hidden">Consultor</span>
+            </button>
+
+            <!-- Selo Central Discreto no Sticky Header -->
+            <a href="#topo" class="font-serif text-lg sm:text-xl font-bold tracking-wide text-cocoa-800 flex items-center gap-1.5">
+                <i data-lucide="moon" class="w-4 h-4 text-rosewood-500"></i>
+                <span>Moon Alquimia</span>
+            </a>
+
+            <!-- Botão Sacola / Kit Ritual (Direita) -->
+            <button onclick="toggleCart(true)" class="relative inline-flex items-center gap-2 px-4 py-2 rounded-full bg-rosewood-500 hover:bg-rosewood-600 text-white text-xs sm:text-sm font-semibold shadow-sm transition cursor-pointer">
+                <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                <span class="hidden sm:inline">Meu Ritual</span>
+                <span id="header-cart-badge" class="px-2 py-0.5 text-[11px] font-bold rounded-full bg-cream-50 text-rosewood-600">0</span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Seção Hero com o Logo em Destaque Centralizado -->
+    <section id="topo" class="relative overflow-hidden bg-gradient-to-b from-cream-50 via-cream-100 to-cream-100 pt-8 pb-10 sm:pt-12 sm:pb-14 border-b border-cream-200/80">
+        <!-- Elementos decorativos orgânicos suaves -->
+        <div class="absolute -top-24 -left-24 w-72 h-72 rounded-full bg-rosewood-100/50 blur-3xl pointer-events-none"></div>
+        <div class="absolute top-12 -right-24 w-80 h-80 rounded-full bg-sage-100/60 blur-3xl pointer-events-none"></div>
+
+        <div class="relative max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
+            <!-- Logotipo Centralizado em Tamanho de Destaque -->
+            <div class="mb-5 flex items-center justify-center">
+                <img 
+                    id="brand-logo"
+                    src="logo.png" 
+                    alt="Moon Alquimia - Cosméticos Naturais Artesanais" 
+                    class="h-44 sm:h-56 w-auto max-w-[88vw] sm:max-w-[460px] object-contain mx-auto rounded-3xl drop-shadow-sm transition-transform duration-500 hover:scale-[1.02]"
+                    onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');"
+                >
+                <!-- Fallback elegante em SVG botânico caso logo.png ainda não esteja na pasta -->
+                <div id="logo-fallback" class="hidden flex flex-col items-center justify-center bg-cream-50 border border-cream-300 px-10 py-7 rounded-full shadow-xs">
+                    <div class="w-20 h-20 rounded-full bg-rosewood-50 border border-rosewood-200 flex items-center justify-center text-rosewood-500 mb-2">
+                        <svg class="w-11 h-11" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M29 8a15 15 0 1 0 11 25.2A13 13 0 0 1 29 8Z"/>
+                            <path d="M18 28c4-5 10-7 16-6-2 6-7 11-13 11"/>
+                            <path d="M18 28c-3-4-4-9-2-14 5 2 8 6 8 11"/>
+                            <circle cx="34" cy="13" r="1.5" fill="currentColor"/>
+                        </svg>
+                    </div>
+                    <span class="font-serif text-2xl font-bold tracking-wider text-cocoa-800">Moon Alquimia</span>
+                    <span class="text-[11px] uppercase tracking-[0.2em] text-rosewood-500 mt-0.5">Botânica &bull; Artesanal</span>
+                </div>
+            </div>
+
+            <span class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-sage-50 border border-sage-100 text-sage-700 text-xs font-medium tracking-wide mb-3">
+                <i data-lucide="leaf" class="w-3.5 h-3.5"></i>
+                100% Natural &bull; Vegano &bull; Feito à Mão em Pequenos Lotes
+            </span>
+
+            <h1 class="font-serif text-3xl sm:text-5xl font-semibold text-cocoa-900 leading-tight max-w-2xl">
+                Alquimia botânica para transformar o seu autocuidado em ritual
+            </h1>
+            <p class="text-sm sm:text-base text-cocoa-700 mt-3 max-w-xl leading-relaxed">
+                Shampoos sólidos, sabonetes terapêuticos, perfumes botânicos e escalda-pés formulados com óleos essenciais puros, argilas e extratos da natureza.
+            </p>
+
+            <!-- Chamadas para Ação -->
+            <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <a href="#catalogo" class="px-6 py-3 rounded-full bg-rosewood-500 hover:bg-rosewood-600 text-white text-sm font-semibold shadow-sm transition">
+                    Explorar Produtos
+                </a>
+                <button onclick="openQuizModal()" class="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-cream-50 hover:bg-rosewood-50 text-cocoa-800 border border-cream-300 text-sm font-semibold transition cursor-pointer">
+                    <i data-lucide="wand-2" class="w-4 h-4 text-rosewood-500"></i>
+                    Fazer Teste de Ritual Ideal
+                </button>
+            </div>
+
+            <!-- Banner Informativo do Kit Presente -->
+            <div class="mt-8 inline-flex items-center gap-2.5 px-4 py-2 rounded-2xl bg-rosewood-50/90 border border-rosewood-200/80 text-xs sm:text-sm text-rosewood-700">
+                <i data-lucide="gift" class="w-4 h-4 text-rosewood-500 shrink-0"></i>
+                <span><strong>Monte seu Kit Ritual:</strong> Escolha 3 ou mais produtos e ganhe <strong>10% de desconto</strong> automático!</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- CONTEÚDO PRINCIPAL: FILTROS E CATÁLOGO DE PRODUTOS                    -->
+    <!-- ===================================================================== -->
+    <main id="catalogo" class="flex-grow max-w-6xl w-full mx-auto px-4 sm:px-6 py-8 sm:py-12 space-y-8">
+
+        <!-- Painel de Filtros Duplos (Categoria + Ritual/Sensação) -->
+        <section aria-label="Filtros do Catálogo" class="bg-cream-50 rounded-3xl p-5 sm:p-6 border border-cream-200 shadow-2xs space-y-5">
+            <!-- Linha 1: Categorias -->
+            <div>
+                <div class="flex items-center justify-between mb-2.5">
+                    <span class="text-xs font-bold uppercase tracking-wider text-cocoa-700 flex items-center gap-1.5">
+                        <i data-lucide="sparkles" class="w-3.5 h-3.5 text-rosewood-500"></i>
+                        Filtrar por Categoria
+                    </span>
+                    <span id="products-counter" class="text-xs text-cocoa-700 font-medium">Mostrando todos os produtos</span>
+                </div>
+                <div id="category-filters" class="flex flex-wrap gap-2">
+                    <!-- Botões gerados dinamicamente via JS -->
+                </div>
+            </div>
+
+            <div class="border-t border-cream-200/80"></div>
+
+            <!-- Linha 2: Ritual / Sensação + Busca -->
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                <div>
+                    <span class="text-xs font-bold uppercase tracking-wider text-sage-700 flex items-center gap-1.5 mb-2.5">
+                        <i data-lucide="heart-handshake" class="w-3.5 h-3.5 text-sage-500"></i>
+                        Ou escolha pela Sensação / Ritual
+                    </span>
+                    <div id="ritual-filters" class="flex flex-wrap gap-2">
+                        <!-- Botões gerados dinamicamente via JS -->
+                    </div>
+                </div>
+
+                <!-- Busca Rápida por Ingrediente ou Aroma -->
+                <div class="relative w-full lg:w-72 shrink-0 self-end">
+                    <i data-lucide="search" class="w-4 h-4 text-cocoa-700/60 absolute left-3.5 top-1/2 -translate-y-1/2"></i>
+                    <input 
+                        type="text" 
+                        id="search-input"
+                        oninput="renderCatalog()"
+                        placeholder="Buscar lavanda, alecrim, argila..." 
+                        class="w-full pl-10 pr-8 py-2.5 rounded-full bg-cream-100 border border-cream-300 text-sm text-cocoa-800 placeholder-cocoa-700/50 focus:outline-none focus:ring-2 focus:ring-rosewood-400"
+                    >
+                    <button id="clear-search-btn" onclick="clearSearch()" class="hidden absolute right-3 top-1/2 -translate-y-1/2 text-cocoa-700 hover:text-rosewood-600 cursor-pointer">
+                        <i data-lucide="x" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grade de Produtos -->
+        <section id="catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Cards de produtos renderizados via JS -->
+        </section>
+
+        <!-- Estado Vazio caso nenhum produto combine com os filtros -->
+        <div id="empty-catalog" class="hidden bg-cream-50 rounded-3xl p-12 text-center border border-cream-200">
+            <div class="w-14 h-14 rounded-full bg-rosewood-50 text-rosewood-500 flex items-center justify-center mx-auto mb-3">
+                <i data-lucide="flower-2" class="w-7 h-7"></i>
+            </div>
+            <h3 class="font-serif text-2xl font-semibold text-cocoa-900">Nenhuma poção encontrada</h3>
+            <p class="text-sm text-cocoa-700 mt-1 max-w-md mx-auto">Não encontramos produtos com essa combinação de filtros. Que tal ver toda a nossa coleção artesanal?</p>
+            <button onclick="resetFilters()" class="mt-4 px-5 py-2.5 rounded-full bg-rosewood-500 hover:bg-rosewood-600 text-white text-xs font-semibold transition cursor-pointer">
+                Limpar Filtros
+            </button>
+        </div>
+    </main>
+
+    <!-- Barra Flutuante Mobile quando há itens na sacola -->
+    <div id="mobile-cart-bar" class="fixed bottom-4 inset-x-4 z-30 sm:hidden hidden">
+        <button onclick="toggleCart(true)" class="w-full py-3.5 px-5 rounded-full bg-rosewood-600 text-white shadow-xl flex items-center justify-between text-sm font-semibold cursor-pointer">
+            <span class="flex items-center gap-2">
+                <i data-lucide="shopping-bag" class="w-4 h-4"></i>
+                <span id="mobile-bar-count">0 itens no Ritual</span>
+            </span>
+            <span id="mobile-bar-total" class="font-bold">R$ 0,00 &rarr;</span>
+        </button>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- RODAPÉ ELEGANTE E DISCRETO                                            -->
+    <!-- ===================================================================== -->
+    <footer class="bg-cream-50 border-t border-cream-200 py-8 mt-auto">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+            <div class="flex items-center gap-2 text-xs text-cocoa-700">
+                <i data-lucide="leaf" class="w-4 h-4 text-sage-500"></i>
+                <span>Cosméticos Naturais &bull; Livres de parabenos, petrolatos e crueldade animal</span>
+            </div>
+            <p class="font-serif text-base font-semibold text-cocoa-800 tracking-wide">
+                Moon Alquimia &bull; Feito à mão com amor
+            </p>
+        </div>
+    </footer>
+
+    <!-- ===================================================================== -->
+    <!-- MODAL DO CONSULTOR DE ALQUIMIA (QUIZ DE 3 PERGUNTAS)                  -->
+    <!-- ===================================================================== -->
+    <div id="quiz-modal" class="fixed inset-0 z-50 hidden bg-cocoa-900/50 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+        <div class="bg-cream-50 rounded-3xl max-w-lg w-full border border-cream-200 shadow-2xl overflow-hidden my-8">
+            <!-- Cabeçalho do Quiz -->
+            <div class="bg-rosewood-50 px-6 py-4 border-b border-rosewood-100 flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i data-lucide="sparkles" class="w-5 h-5 text-rosewood-500"></i>
+                    <h2 class="font-serif text-2xl font-bold text-cocoa-900">Consultor de Alquimia</h2>
+                </div>
+                <button onclick="closeQuizModal()" class="p-1.5 rounded-full text-cocoa-700 hover:bg-rosewood-100 transition cursor-pointer">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Corpo Dinâmico do Quiz -->
+            <div id="quiz-body" class="p-6">
+                <!-- Preenchido via JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- DRAWER LATERAL: SACOLA INTELIGENTE, KIT PRESENTE & CHECKOUT WHATSAPP  -->
+    <!-- ===================================================================== -->
+    <div id="cart-overlay" onclick="toggleCart(false)" class="fixed inset-0 z-40 hidden bg-cocoa-900/40 backdrop-blur-xs transition-opacity"></div>
+    
+    <aside id="cart-drawer" class="fixed top-0 right-0 z-50 h-full w-full max-w-md bg-cream-50 shadow-2xl border-l border-cream-200 flex flex-col translate-x-full drawer-transition">
+        <!-- Topo da Sacola -->
+        <div class="px-6 py-4 bg-cream-100 border-b border-cream-200 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <i data-lucide="shopping-bag" class="w-5 h-5 text-rosewood-500"></i>
+                <h2 class="font-serif text-2xl font-bold text-cocoa-900">Seu Ritual</h2>
+            </div>
+            <button onclick="toggleCart(false)" class="p-1.5 rounded-full text-cocoa-700 hover:bg-cream-200 transition cursor-pointer">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+        </div>
+
+        <!-- Barra de Progresso do Desconto de Kit (3+ itens = 10% OFF) -->
+        <div class="px-6 py-3 bg-rosewood-50/90 border-b border-rosewood-100">
+            <div class="flex items-center justify-between text-xs font-semibold text-rosewood-700 mb-1.5">
+                <span id="kit-progress-text">Adicione 3 itens e ganhe 10% OFF no Kit Ritual!</span>
+                <span id="kit-progress-count">0/3</span>
+            </div>
+            <div class="w-full h-2 bg-rosewood-100 rounded-full overflow-hidden">
+                <div id="kit-progress-bar" class="h-full bg-rosewood-500 rounded-full transition-all duration-300" style="width: 0%"></div>
+            </div>
+        </div>
+
+        <!-- Área Rolável: Itens + Cartão Presente + Dados do Cliente -->
+        <div class="flex-grow overflow-y-auto px-6 py-4 space-y-6">
+            <!-- Lista de Produtos na Sacola -->
+            <div id="cart-items-container" class="space-y-3">
+                <!-- Preenchido via JS -->
+            </div>
+
+            <!-- Opção de Cartão de Presente -->
+            <div id="gift-card-section" class="hidden bg-cream-100/80 p-4 rounded-2xl border border-cream-200 space-y-3">
+                <label class="flex items-center gap-2.5 cursor-pointer select-none">
+                    <input type="checkbox" id="is-gift-checkbox" onchange="toggleGiftMessage()" class="w-4 h-4 accent-rosewood-500 rounded">
+                    <span class="text-xs sm:text-sm font-semibold text-cocoa-800 flex items-center gap-1.5">
+                        <i data-lucide="gift" class="w-4 h-4 text-rosewood-500"></i>
+                        É para presente? Incluir cartão personalizado
+                    </span>
+                </label>
+                <div id="gift-message-box" class="hidden">
+                    <textarea id="gift-message-input" rows="2" placeholder="Escreva aqui sua dedicatória especial para o cartão..." class="w-full p-3 rounded-xl bg-cream-50 border border-cream-300 text-xs text-cocoa-800 focus:outline-none focus:ring-2 focus:ring-rosewood-400"></textarea>
+                </div>
+            </div>
+
+            <!-- Formulário de Fechamento WhatsApp -->
+            <div id="checkout-form-section" class="hidden space-y-3.5 pt-2 border-t border-cream-200">
+                <h3 class="font-serif text-xl font-bold text-cocoa-900">Finalizar Pedido</h3>
+
+                <div>
+                    <label class="block text-xs font-semibold text-cocoa-700 mb-1">Seu Nome *</label>
+                    <input type="text" id="client-name" placeholder="Como podemos te chamar?" class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-cream-300 text-sm focus:outline-none focus:ring-2 focus:ring-rosewood-400">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block text-xs font-semibold text-cocoa-700 mb-1">Recebimento</label>
+                        <select id="delivery-method" onchange="toggleAddressField()" class="w-full px-3 py-2.5 rounded-xl bg-white border border-cream-300 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rosewood-400">
+                            <option value="Entrega">Entrega</option>
+                            <option value="Retirada no Ateliê">Retirada no Ateliê</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-cocoa-700 mb-1">Pagamento</label>
+                        <select id="payment-method" onchange="renderCart()" class="w-full px-3 py-2.5 rounded-xl bg-white border border-cream-300 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-rosewood-400">
+                            <option value="PIX">PIX (+5% OFF)</option>
+                            <option value="Cartão de Crédito/Débito">Cartão</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div id="address-field-wrapper">
+                    <label class="block text-xs font-semibold text-cocoa-700 mb-1">Endereço ou Bairro para Entrega *</label>
+                    <input type="text" id="client-address" placeholder="Rua, número, bairro e cidade..." class="w-full px-3.5 py-2.5 rounded-xl bg-white border border-cream-300 text-sm focus:outline-none focus:ring-2 focus:ring-rosewood-400">
+                </div>
+            </div>
+        </div>
+
+        <!-- Rodapé da Sacola com Resumo de Valores e Botão WhatsApp -->
+        <div id="cart-footer" class="hidden px-6 py-4 bg-cream-100 border-t border-cream-200 space-y-3">
+            <div class="space-y-1 text-xs sm:text-sm">
+                <div class="flex justify-between text-cocoa-700">
+                    <span>Subtotal</span>
+                    <span id="cart-subtotal">R$ 0,00</span>
+                </div>
+                <div id="cart-kit-discount-row" class="hidden flex justify-between text-sage-700 font-semibold">
+                    <span>Desconto Kit Ritual (10%)</span>
+                    <span id="cart-kit-discount">- R$ 0,00</span>
+                </div>
+                <div id="cart-pix-discount-row" class="hidden flex justify-between text-rosewood-600 font-semibold">
+                    <span>Desconto PIX (5%)</span>
+                    <span id="cart-pix-discount">- R$ 0,00</span>
+                </div>
+                <div class="flex justify-between text-base font-bold text-cocoa-900 pt-1.5 border-t border-cream-200">
+                    <span>Total Estimado</span>
+                    <span id="cart-total">R$ 0,00</span>
+                </div>
+            </div>
+
+            <button onclick="sendOrderToWhatsApp()" class="w-full py-3.5 px-5 rounded-full bg-sage-700 hover:bg-sage-500 text-white font-semibold text-sm shadow-md flex items-center justify-center gap-2 transition cursor-pointer">
+                <i data-lucide="send" class="w-4 h-4"></i>
+                <span>Enviar Pedido pelo WhatsApp</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ===================================================================== -->
+    <!-- JAVASCRIPT: CATÁLOGO EDITÁVEL, QUIZ, SACOLA E INTEGRAÇÃO WHATSAPP     -->
+    <!-- ===================================================================== -->
+    <script>
+        // =====================================================================
+        // CONFIGURAÇÕES DA LOJA (EDITE AQUI FACILMENTE QUANDO QUISER)
+        // =====================================================================
+        const STORE_CONFIG = {
+            brandName: 'Moon Alquimia',
+            whatsappNumber: '55519989480967', // DDI 55 + número informado
+            kitMinItems: 3,                     // Quantidade mínima para desconto de Kit
+            kitDiscountPercent: 10,             // 10% de desconto no Kit Ritual
+            pixDiscountPercent: 5               // 5% de desconto adicional no PIX
+        };
+
+        // =====================================================================
+        // CATÁLOGO DE PRODUTOS ARTESANAIS (EDITE PREÇOS, NOMES E INGREDIENTES)
+        // =====================================================================
+        const PRODUCTS = [
+            {
+                id: 'shampoo-alecrim-menta',
+                name: 'Shampoo Sólido Alecrim & Menta',
+                category: 'Shampoos Sólidos',
+                ritual: 'Energia & Foco',
+                scentFamily: 'Herbal & Fresco',
+                moment: 'Banho revigorante',
+                weight: '75g (rende até 60 lavagens)',
+                price: 44.90,
+                badge: 'Refrescante & Fortalecedor',
+                icon: 'sprout',
+                accentBg: 'bg-sage-50 text-sage-700',
+                ingredients: 'Óleo Essencial de Alecrim, Hortelã-Pimenta, Argila Verde e Manteiga de Karité',
+                description: 'Limpa suavemente a raiz, estimula o crescimento capilar e traz uma sensação revigorante de frescor herbal no banho.'
+            },
+            {
+                id: 'shampoo-lavanda-hibisco',
+                name: 'Shampoo Sólido Lavanda & Hibisco',
+                category: 'Shampoos Sólidos',
+                ritual: 'Hidratação Profunda',
+                scentFamily: 'Floral & Doce',
+                moment: 'Banho revigorante',
+                weight: '75g (rende até 60 lavagens)',
+                price: 46.90,
+                badge: 'Nutrição & Brilho',
+                icon: 'flower-2',
+                accentBg: 'bg-rosewood-50 text-rosewood-600',
+                ingredients: 'Extrato de Hibisco, Óleo Essencial de Lavanda Francesa, Óleo de Rosa Mosqueta e Pracaxi',
+                description: 'Fórmula cremosa rica em antioxidantes naturais que devolve maciez, alinhamento e brilho espelhado aos fios ressecados.'
+            },
+            {
+                id: 'sabonete-argila-rosa',
+                name: 'Sabonete Artesanal Argila Rosa & Rosas',
+                category: 'Sabonetes Artesanais',
+                ritual: 'Hidratação Profunda',
+                scentFamily: 'Floral & Doce',
+                moment: 'Banho revigorante',
+                weight: '110g',
+                price: 28.90,
+                badge: 'Peles Sensíveis',
+                icon: 'heart',
+                accentBg: 'bg-rosewood-50 text-rosewood-600',
+                ingredients: 'Argila Rosa pura, Óleo de Amêndoas Doces, Óleo Essencial de Gerânio e Pétalas de Rosas',
+                description: 'Espuma aveludada que limpa sem ressecar, acalma peles delicadas e deixa um toque acetinado e floral na pele.'
+            },
+            {
+                id: 'sabonete-arruda-sal-grosso',
+                name: 'Sabonete Purificante Ervas & Sal Marinho',
+                category: 'Sabonetes Artesanais',
+                ritual: 'Purificação',
+                scentFamily: 'Herbal & Fresco',
+                moment: 'Banho revigorante',
+                weight: '110g',
+                price: 29.90,
+                badge: 'Limpeza Energética',
+                icon: 'sparkles',
+                accentBg: 'bg-sage-50 text-sage-700',
+                ingredients: 'Extrato de Arruda, Alecrim, Manjericão, Sal Marinho fino e Óleo Essencial de Cedro',
+                description: 'Ideal para descarregar o cansaço do dia, promovendo esfoliação suave e renovação das energias no banho.'
+            },
+            {
+                id: 'perfume-lua-cheia',
+                name: 'Perfume Botânico Lua de Baunilha & Jasmim',
+                category: 'Perfumes Botânicos',
+                ritual: 'Relaxar & Dormir',
+                scentFamily: 'Floral & Doce',
+                moment: 'Perfumar e cuidar ao longo do dia',
+                weight: '30mL (Frasco Âmbar)',
+                price: 68.00,
+                badge: 'Elixir Envolvente',
+                icon: 'moon',
+                accentBg: 'bg-rosewood-50 text-rosewood-600',
+                ingredients: 'Tintura de Baunilha Natural, Absoluto de Jasmim, Sândalo e Álcool de Cereais Orgânico',
+                description: 'Fragrância feminina, acolhedora e intimista que evolui na pele com notas florais adocicadas e fundo amadeirado suave.'
+            },
+            {
+                id: 'perfume-sol-laranja',
+                name: 'Perfume Botânico Solar Flor de Laranjeira',
+                category: 'Perfumes Botânicos',
+                ritual: 'Energia & Foco',
+                scentFamily: 'Cítrico & Solar',
+                moment: 'Perfumar e cuidar ao longo do dia',
+                weight: '30mL (Frasco Âmbar)',
+                price: 65.00,
+                badge: 'Alegria & Leveza',
+                icon: 'sun',
+                accentBg: 'bg-amber-50 text-amber-700',
+                ingredients: 'Óleo Essencial de Laranja Doce, Néroli, Bergamota e Capim-Limão',
+                description: 'Aroma luminoso e vibrante que eleva o humor, traz clareza mental e perfuma com frescor cítrico natural.'
+            },
+            {
+                id: 'escalda-pes-lavanda',
+                name: 'Escalda-Pés Serenidade Lavanda & Camomila',
+                category: 'Escalda-Pés',
+                ritual: 'Relaxar & Dormir',
+                scentFamily: 'Floral & Doce',
+                moment: 'Ritual noturno antes de dormir',
+                weight: '180g (Pote de Vidro)',
+                price: 36.00,
+                badge: 'Sono Tranquilo',
+                icon: 'cloud-moon',
+                accentBg: 'bg-rosewood-50 text-rosewood-600',
+                ingredients: 'Sal de Epsom, Flores de Camomila, Lavanda Desidratada e Óleo Essencial de Lavanda',
+                description: 'Alivia tensões acumuladas nos pés, desacelera os pensamentos e prepara o corpo para uma noite profunda de descanso.'
+            },
+            {
+                id: 'escalda-pes-purificacao',
+                name: 'Escalda-Pés Desintoxicante Capim-Limão & Eucalipto',
+                category: 'Escalda-Pés',
+                ritual: 'Purificação',
+                scentFamily: 'Cítrico & Solar',
+                moment: 'Ritual noturno antes de dormir',
+                weight: '180g (Pote de Vidro)',
+                price: 36.00,
+                badge: 'Alívio & Leveza',
+                icon: 'droplets',
+                accentBg: 'bg-sage-50 text-sage-700',
+                ingredients: 'Sal Grosso Marinho, Folhas de Eucalipto, Capim-Limão e Óleo Essencial de Melaleuca',
+                description: 'Ativa a circulação, reduz o inchaço após longos dias em pé e purifica profundamente através da aromaterapia.'
+            }
+        ];
+
+        // =====================================================================
+        // ESTADO DA APLICAÇÃO E PERSISTÊNCIA (localStorage)
+        // =====================================================================
+        const CART_STORAGE_KEY = 'moon_alquimia_cart_v1';
+        let cart = [];
+        let selectedCategory = 'Todos';
+        let selectedRitual = 'Todos os Rituais';
+
+        // Estado do Quiz
+        let quizStep = 0;
+        let quizAnswers = {
+            ritual: '',
+            scent: '',
+            moment: ''
+        };
+
+        const QUIZ_QUESTIONS = [
+            {
+                key: 'ritual',
+                question: '1. Qual sensação você mais precisa despertar hoje?',
+                subtitle: 'Escolha o foco principal do seu momento de autocuidado.',
+                options: [
+                    { label: 'Acalmar a mente e dormir melhor', value: 'Relaxar & Dormir', icon: 'moon' },
+                    { label: 'Renovar as energias e ter foco', value: 'Energia & Foco', icon: 'sun' },
+                    { label: 'Nutrir profundamente pele e fios', value: 'Hidratação Profunda', icon: 'heart' },
+                    { label: 'Limpeza energética e leveza', value: 'Purificação', icon: 'sparkles' }
+                ]
+            },
+            {
+                key: 'scent',
+                question: '2. Qual família olfativa mais encanta os seus sentidos?',
+                subtitle: 'Nossos aromas vêm 100% de óleos essenciais e extratos puros.',
+                options: [
+                    { label: 'Floral & Doce (Lavanda, Rosas, Baunilha)', value: 'Floral & Doce', icon: 'flower-2' },
+                    { label: 'Herbal & Fresco (Alecrim, Menta, Eucalipto)', value: 'Herbal & Fresco', icon: 'leaf' },
+                    { label: 'Cítrico & Solar (Laranja Doce, Capim-Limão)', value: 'Cítrico & Solar', icon: 'sun-medium' }
+                ]
+            },
+            {
+                key: 'moment',
+                question: '3. Qual momento do seu dia você quer transformar?',
+                subtitle: 'Vamos selecionar as texturas ideais para a sua rotina.',
+                options: [
+                    { label: 'Um banho revigorante e terapêutico', value: 'Banho revigorante', icon: 'droplets' },
+                    { label: 'Um ritual noturno antes de dormir', value: 'Ritual noturno antes de dormir', icon: 'cloud-moon' },
+                    { label: 'Perfumar e cuidar ao longo do dia', value: 'Perfumar e cuidar ao longo do dia', icon: 'sparkles' }
+                ]
+            }
+        ];
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCart();
+            renderFilterButtons();
+            renderCatalog();
+            renderCart();
+            lucide.createIcons();
+        });
+
+        function loadCart() {
+            try {
+                const saved = localStorage.getItem(CART_STORAGE_KEY);
+                if (saved) {
+                    const parsed = JSON.parse(saved);
+                    if (Array.isArray(parsed)) cart = parsed;
+                }
+            } catch (e) {
+                console.error('Erro ao carregar sacola:', e);
+            }
+        }
+
+        function saveCart() {
+            try {
+                localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+            } catch (e) {
+                console.error('Erro ao salvar sacola:', e);
+            }
+        }
+
+        function formatBRL(value) {
+            return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        // =====================================================================
+        // FILTROS E RENDERIZAÇÃO DO CATÁLOGO
+        // =====================================================================
+        function renderFilterButtons() {
+            const categories = ['Todos', 'Shampoos Sólidos', 'Sabonetes Artesanais', 'Perfumes Botânicos', 'Escalda-Pés'];
+            const rituals = ['Todos os Rituais', 'Relaxar & Dormir', 'Energia & Foco', 'Hidratação Profunda', 'Purificação'];
+
+            const catContainer = document.getElementById('category-filters');
+            catContainer.innerHTML = categories.map(cat => {
+                const active = selectedCategory === cat;
+                return `
+                    <button onclick="selectCategory('${cat}')" class="px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition cursor-pointer ${
+                        active 
+                        ? 'bg-rosewood-500 text-white shadow-xs' 
+                        : 'bg-cream-100 hover:bg-rosewood-50 text-cocoa-800 border border-cream-300'
+                    }">
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+
+            const ritContainer = document.getElementById('ritual-filters');
+            ritContainer.innerHTML = rituals.map(rit => {
+                const active = selectedRitual === rit;
+                return `
+                    <button onclick="selectRitual('${rit}')" class="px-3.5 py-1.5 rounded-full text-xs font-semibold transition cursor-pointer ${
+                        active 
+                        ? 'bg-sage-700 text-white shadow-xs' 
+                        : 'bg-sage-50 hover:bg-sage-100 text-sage-700 border border-sage-100'
+                    }">
+                        ${rit}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectCategory(category) {
+            selectedCategory = category;
+            renderFilterButtons();
+            renderCatalog();
+        }
+
+        function selectRitual(ritual) {
+            selectedRitual = ritual;
+            renderFilterButtons();
+            renderCatalog();
+        }
+
+        function clearSearch() {
+            document.getElementById('search-input').value = '';
+            renderCatalog();
+        }
+
+        function resetFilters() {
+            selectedCategory = 'Todos';
+            selectedRitual = 'Todos os Rituais';
+            document.getElementById('search-input').value = '';
+            renderFilterButtons();
+            renderCatalog();
+        }
+
+        function renderCatalog() {
+            const searchInput = document.getElementById('search-input');
+            const clearBtn = document.getElementById('clear-search-btn');
+            const query = (searchInput.value || '').trim().toLowerCase();
+
+            if (query.length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+
+            const filtered = PRODUCTS.filter(p => {
+                const matchCat = selectedCategory === 'Todos' || p.category === selectedCategory;
+                const matchRit = selectedRitual === 'Todos os Rituais' || p.ritual === selectedRitual;
+                const matchQuery = !query || `${p.name} ${p.ingredients} ${p.description} ${p.ritual} ${p.category}`.toLowerCase().includes(query);
+                return matchCat && matchRit && matchQuery;
+            });
+
+            document.getElementById('products-counter').textContent = 
+                filtered.length === 1 ? '1 produto encontrado' : `${filtered.length} produtos encontrados`;
+
+            const grid = document.getElementById('catalog-grid');
+            const empty = document.getElementById('empty-catalog');
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                grid.classList.add('hidden');
+                empty.classList.remove('hidden');
+                lucide.createIcons();
+                return;
+            }
+
+            empty.classList.add('hidden');
+            grid.classList.remove('hidden');
+
+            grid.innerHTML = filtered.map(product => {
+                const inCartItem = cart.find(item => item.id === product.id);
+                const qtyInCart = inCartItem ? inCartItem.qty : 0;
+
+                return `
+                <article class="bg-cream-50 rounded-3xl border border-cream-200 p-6 flex flex-col justify-between shadow-2xs hover:shadow-md hover:border-rosewood-200 transition duration-300">
+                    <div>
+                        <!-- Topo: Ilustração Botânica + Selos -->
+                        <div class="flex items-start justify-between gap-3 mb-4">
+                            <div class="w-14 h-14 rounded-2xl ${product.accentBg} flex items-center justify-center shrink-0 border border-cream-200">
+                                <i data-lucide="${product.icon}" class="w-7 h-7"></i>
+                            </div>
+                            <div class="flex flex-col items-end gap-1.5">
+                                <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-sage-50 border border-sage-100 text-sage-700 text-[11px] font-semibold">
+                                    <i data-lucide="leaf" class="w-3 h-3"></i>
+                                    100% Natural & Vegano
+                                </span>
+                                <span class="px-2.5 py-0.5 rounded-full bg-cream-100 text-cocoa-700 text-[11px] font-medium">
+                                    ${product.badge}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Categoria & Ritual -->
+                        <div class="text-[11px] font-semibold uppercase tracking-wider text-rosewood-500 mb-1">
+                            ${product.category} &bull; ${product.ritual}
+                        </div>
+
+                        <!-- Nome do Produto -->
+                        <h3 class="font-serif text-2xl font-bold text-cocoa-900 leading-snug">
+                            ${product.name}
+                        </h3>
+
+                        <!-- Descrição Sensorial -->
+                        <p class="text-xs sm:text-sm text-cocoa-700 mt-2 leading-relaxed">
+                            ${product.description}
+                        </p>
+
+                        <!-- Ingredientes-Chave -->
+                        <div class="mt-4 p-3 rounded-2xl bg-cream-100/90 border border-cream-200/80 text-xs">
+                            <span class="font-bold text-cocoa-800 block mb-0.5">Alquimia de Ingredientes:</span>
+                            <span class="text-cocoa-700">${product.ingredients}</span>
+                        </div>
+                    </div>
+
+                    <!-- Rodapé do Card: Peso, Preço e Botão Adicionar -->
+                    <div class="pt-5 mt-5 border-t border-cream-200 flex items-center justify-between gap-3">
+                        <div>
+                            <span class="block text-[11px] text-cocoa-700">${product.weight}</span>
+                            <span class="font-serif text-2xl font-bold text-cocoa-900">${formatBRL(product.price)}</span>
+                        </div>
+
+                        <button onclick="addToCart('${product.id}')" class="inline-flex items-center gap-1.5 px-4 py-2.5 rounded-full bg-rosewood-500 hover:bg-rosewood-600 text-white text-xs sm:text-sm font-semibold shadow-xs transition cursor-pointer">
+                            <i data-lucide="plus" class="w-4 h-4"></i>
+                            <span>${qtyInCart > 0 ? `Na Sacola (${qtyInCart})` : 'Adicionar ao Ritual'}</span>
+                        </button>
+                    </div>
+                </article>
+                `;
+            }).join('');
+
+            lucide.createIcons();
+        }
+
+        // =====================================================================
+        // CONSULTOR DE ALQUIMIA (QUIZ INTERATIVO DE 3 PERGUNTAS)
+        // =====================================================================
+        function openQuizModal() {
+            quizStep = 0;
+            quizAnswers = { ritual: '', scent: '', moment: '' };
+            renderQuizStep();
+            document.getElementById('quiz-modal').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeQuizModal() {
+            document.getElementById('quiz-modal').classList.add('hidden');
+        }
+
+        function renderQuizStep() {
+            const container = document.getElementById('quiz-body');
+
+            if (quizStep < QUIZ_QUESTIONS.length) {
+                const q = QUIZ_QUESTIONS[quizStep];
+                const progressPct = ((quizStep + 1) / QUIZ_QUESTIONS.length) * 100;
+
+                container.innerHTML = `
+                    <div class="space-y-5">
+                        <!-- Barra de progresso do Quiz -->
+                        <div>
+                            <div class="flex justify-between text-xs font-semibold text-rosewood-600 mb-1.5">
+                                <span>Pergunta ${quizStep + 1} de ${QUIZ_QUESTIONS.length}</span>
+                                <span>${Math.round(progressPct)}%</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-cream-200 rounded-full overflow-hidden">
+                                <div class="h-full bg-rosewood-500 transition-all duration-300" style="width: ${progressPct}%"></div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <h3 class="font-serif text-2xl font-bold text-cocoa-900 leading-snug">${q.question}</h3>
+                            <p class="text-xs text-cocoa-700 mt-1">${q.subtitle}</p>
+                        </div>
+
+                        <div class="space-y-2.5">
+                            ${q.options.map(opt => `
+                                <button onclick="answerQuiz('${q.key}', '${opt.value}')" class="w-full p-3.5 rounded-2xl bg-cream-100 hover:bg-rosewood-50 border border-cream-300 hover:border-rosewood-400 text-left flex items-center gap-3 transition cursor-pointer group">
+                                    <div class="w-10 h-10 rounded-xl bg-cream-50 text-rosewood-500 group-hover:bg-rosewood-500 group-hover:text-white flex items-center justify-center shrink-0 transition">
+                                        <i data-lucide="${opt.icon}" class="w-5 h-5"></i>
+                                    </div>
+                                    <span class="text-sm font-semibold text-cocoa-800 group-hover:text-rosewood-700">${opt.label}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Calcular os 3 produtos mais compatíveis
+                const scored = PRODUCTS.map(p => {
+                    let score = 0;
+                    if (p.ritual === quizAnswers.ritual) score += 3;
+                    if (p.scentFamily === quizAnswers.scent) score += 2;
+                    if (p.moment === quizAnswers.moment) score += 2;
+                    return { product: p, score };
+                }).sort((a, b) => b.score - a.score);
+
+                const recommended = scored.slice(0, 3).map(item => item.product);
+                const recIds = recommended.map(p => p.id);
+                const totalKitPrice = recommended.reduce((acc, p) => acc + p.price, 0);
+                const discountedKitPrice = totalKitPrice * (1 - STORE_CONFIG.kitDiscountPercent / 100);
+
+                container.innerHTML = `
+                    <div class="space-y-5">
+                        <div class="text-center">
+                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-sage-50 text-sage-700 text-xs font-bold mb-2">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                                Seu Ritual Personalizado está pronto!
+                            </span>
+                            <h3 class="font-serif text-2xl font-bold text-cocoa-900">Alquimia selecionada para você</h3>
+                            <p class="text-xs text-cocoa-700 mt-1">
+                                Foco em <strong>${quizAnswers.ritual}</strong> com notas <strong>${quizAnswers.scent}</strong>.
+                            </p>
+                        </div>
+
+                        <div class="space-y-2.5">
+                            ${recommended.map(p => `
+                                <div class="p-3 rounded-2xl bg-cream-100 border border-cream-200 flex items-center justify-between gap-3">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl ${p.accentBg} flex items-center justify-center shrink-0">
+                                            <i data-lucide="${p.icon}" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-serif text-lg font-bold text-cocoa-900 leading-tight">${p.name}</h4>
+                                            <span class="text-[11px] text-cocoa-700">${p.category} &bull; ${formatBRL(p.price)}</span>
+                                        </div>
+                                    </div>
+                                    <button onclick="addToCart('${p.id}')" class="px-3 py-1.5 rounded-full bg-cream-50 hover:bg-rosewood-500 text-rosewood-600 hover:text-white border border-rosewood-200 text-xs font-semibold transition cursor-pointer shrink-0">
+                                        + Add
+                                    </button>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="p-4 rounded-2xl bg-rosewood-50 border border-rosewood-200 text-center space-y-2">
+                            <p class="text-xs text-rosewood-700 font-medium">
+                                Levando os 3 itens juntos você já garante <strong>10% OFF do Kit Ritual</strong>:
+                            </p>
+                            <div class="flex items-center justify-center gap-2">
+                                <span class="text-xs line-through text-cocoa-700">${formatBRL(totalKitPrice)}</span>
+                                <span class="font-serif text-2xl font-bold text-rosewood-600">${formatBRL(discountedKitPrice)}</span>
+                            </div>
+                            <button onclick='addRecommendedKit(${JSON.stringify(recIds)})' class="w-full py-3 px-5 rounded-full bg-rosewood-500 hover:bg-rosewood-600 text-white text-sm font-semibold shadow-sm transition cursor-pointer">
+                                Adicionar Ritual Completo à Sacola
+                            </button>
+                        </div>
+
+                        <div class="text-center">
+                            <button onclick="openQuizModal()" class="text-xs font-semibold text-cocoa-700 hover:text-rosewood-600 underline cursor-pointer">
+                                Refazer o teste
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            lucide.createIcons();
+        }
+
+        function answerQuiz(key, value) {
+            quizAnswers[key] = value;
+            quizStep++;
+            renderQuizStep();
+        }
+
+        function addRecommendedKit(productIds) {
+            productIds.forEach(id => {
+                const existing = cart.find(item => item.id === id);
+                if (existing) {
+                    existing.qty += 1;
+                } else {
+                    cart.push({ id, qty: 1 });
+                }
+            });
+            saveCart();
+            renderCatalog();
+            renderCart();
+            closeQuizModal();
+            toggleCart(true);
+            showToast('Ritual completo adicionado com 10% OFF!', 'success');
+        }
+
+        // =====================================================================
+        // SACOLA INTELIGENTE, DESCONTOS DE KIT E WHATSAPP
+        // =====================================================================
+        function toggleCart(open) {
+            const drawer = document.getElementById('cart-drawer');
+            const overlay = document.getElementById('cart-overlay');
+            if (open) {
+                overlay.classList.remove('hidden');
+                drawer.classList.remove('translate-x-full');
+            } else {
+                overlay.classList.add('hidden');
+                drawer.classList.add('translate-x-full');
+            }
+        }
+
+        function addToCart(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === productId);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.push({ id: productId, qty: 1 });
+            }
+
+            saveCart();
+            renderCatalog();
+            renderCart();
+            showToast(`"${product.name}" adicionado ao seu ritual.`, 'success');
+        }
+
+        function updateItemQty(productId, delta) {
+            const index = cart.findIndex(item => item.id === productId);
+            if (index === -1) return;
+
+            cart[index].qty += delta;
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+
+            saveCart();
+            renderCatalog();
+            renderCart();
+        }
+
+        function toggleGiftMessage() {
+            const checked = document.getElementById('is-gift-checkbox').checked;
+            const box = document.getElementById('gift-message-box');
+            if (checked) {
+                box.classList.remove('hidden');
+            } else {
+                box.classList.add('hidden');
+            }
+        }
+
+        function toggleAddressField() {
+            const method = document.getElementById('delivery-method').value;
+            const wrapper = document.getElementById('address-field-wrapper');
+            if (method === 'Entrega') {
+                wrapper.classList.remove('hidden');
+            } else {
+                wrapper.classList.add('hidden');
+            }
+        }
+
+        function calculateTotals() {
+            let totalItems = 0;
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                const product = PRODUCTS.find(p => p.id === item.id);
+                if (product) {
+                    totalItems += item.qty;
+                    subtotal += product.price * item.qty;
+                }
+            });
+
+            const hasKitDiscount = totalItems >= STORE_CONFIG.kitMinItems;
+            const kitDiscount = hasKitDiscount ? subtotal * (STORE_CONFIG.kitDiscountPercent / 100) : 0;
+            const afterKit = subtotal - kitDiscount;
+
+            const paymentMethod = document.getElementById('payment-method')?.value || 'PIX';
+            const hasPixDiscount = paymentMethod === 'PIX' && totalItems > 0;
+            const pixDiscount = hasPixDiscount ? afterKit * (STORE_CONFIG.pixDiscountPercent / 100) : 0;
+
+            const finalTotal = afterKit - pixDiscount;
+
+            return {
+                totalItems,
+                subtotal,
+                hasKitDiscount,
+                kitDiscount,
+                hasPixDiscount,
+                pixDiscount,
+                finalTotal
+            };
+        }
+
+        function renderCart() {
+            const totals = calculateTotals();
+
+            // Atualizar badges do topo e barra mobile
+            document.getElementById('header-cart-badge').textContent = totals.totalItems;
+            const mobileBar = document.getElementById('mobile-cart-bar');
+            if (totals.totalItems > 0) {
+                mobileBar.classList.remove('hidden');
+                document.getElementById('mobile-bar-count').textContent = 
+                    totals.totalItems === 1 ? '1 item no Ritual' : `${totals.totalItems} itens no Ritual`;
+                document.getElementById('mobile-bar-total').textContent = `${formatBRL(totals.finalTotal)} →`;
+            } else {
+                mobileBar.classList.add('hidden');
+            }
+
+            // Barra de progresso do Kit Ritual
+            const progressText = document.getElementById('kit-progress-text');
+            const progressCount = document.getElementById('kit-progress-count');
+            const progressBar = document.getElementById('kit-progress-bar');
+
+            const capped = Math.min(totals.totalItems, STORE_CONFIG.kitMinItems);
+            const pct = (capped / STORE_CONFIG.kitMinItems) * 100;
+            progressBar.style.width = `${pct}%`;
+            progressCount.textContent = `${totals.totalItems}/${STORE_CONFIG.kitMinItems}`;
+
+            if (totals.hasKitDiscount) {
+                progressText.innerHTML = '✨ <strong>Parabéns!</strong> Você desbloqueou <strong>10% OFF</strong> de Kit Ritual!';
+                progressBar.classList.replace('bg-rosewood-500', 'bg-sage-500');
+            } else {
+                const missing = STORE_CONFIG.kitMinItems - totals.totalItems;
+                progressText.textContent = `Falta${missing > 1 ? 'm' : ''} ${missing} item${missing > 1 ? 'ns' : ''} para ganhar 10% OFF no Kit!`;
+                progressBar.classList.replace('bg-sage-500', 'bg-rosewood-500');
+            }
+
+            const itemsContainer = document.getElementById('cart-items-container');
+            const giftSection = document.getElementById('gift-card-section');
+            const checkoutSection = document.getElementById('checkout-form-section');
+            const cartFooter = document.getElementById('cart-footer');
+
+            if (cart.length === 0) {
+                itemsContainer.innerHTML = `
+                    <div class="py-12 text-center space-y-3">
+                        <div class="w-14 h-14 rounded-full bg-cream-100 text-rosewood-400 flex items-center justify-center mx-auto">
+                            <i data-lucide="shopping-bag" class="w-7 h-7"></i>
+                        </div>
+                        <h3 class="font-serif text-xl font-bold text-cocoa-900">Sua sacola está vazia</h3>
+                        <p class="text-xs text-cocoa-700 max-w-xs mx-auto">
+                            Escolha seus produtos artesanais favoritos ou faça nosso teste rápido para descobrir seu ritual ideal.
+                        </p>
+                        <button onclick="toggleCart(false); openQuizModal();" class="mt-2 px-4 py-2 rounded-full bg-rosewood-50 text-rosewood-600 border border-rosewood-200 text-xs font-semibold cursor-pointer">
+                            Descobrir meu Ritual
+                        </button>
+                    </div>
+                `;
+                giftSection.classList.add('hidden');
+                checkoutSection.classList.add('hidden');
+                cartFooter.classList.add('hidden');
+                lucide.createIcons();
+                return;
+            }
+
+            giftSection.classList.remove('hidden');
+            checkoutSection.classList.remove('hidden');
+            cartFooter.classList.remove('hidden');
+
+            itemsContainer.innerHTML = cart.map(item => {
+                const product = PRODUCTS.find(p => p.id === item.id);
+                if (!product) return '';
+
+                return `
+                    <div class="p-3.5 rounded-2xl bg-white border border-cream-200 flex items-center justify-between gap-3">
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="w-10 h-10 rounded-xl ${product.accentBg} flex items-center justify-center shrink-0">
+                                <i data-lucide="${product.icon}" class="w-5 h-5"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <h4 class="font-serif text-lg font-bold text-cocoa-900 truncate">${product.name}</h4>
+                                <span class="text-xs text-cocoa-700">${formatBRL(product.price)} cada</span>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center gap-2 shrink-0">
+                            <button onclick="updateItemQty('${product.id}', -1)" class="w-7 h-7 rounded-full bg-cream-100 hover:bg-rosewood-100 text-cocoa-800 flex items-center justify-center text-sm font-bold cursor-pointer">
+                                -
+                            </button>
+                            <span class="text-xs font-bold w-4 text-center">${item.qty}</span>
+                            <button onclick="updateItemQty('${product.id}', 1)" class="w-7 h-7 rounded-full bg-cream-100 hover:bg-rosewood-100 text-cocoa-800 flex items-center justify-center text-sm font-bold cursor-pointer">
+                                +
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Atualizar valores financeiros
+            document.getElementById('cart-subtotal').textContent = formatBRL(totals.subtotal);
+
+            const kitRow = document.getElementById('cart-kit-discount-row');
+            if (totals.hasKitDiscount) {
+                kitRow.classList.remove('hidden');
+                document.getElementById('cart-kit-discount').textContent = `- ${formatBRL(totals.kitDiscount)}`;
+            } else {
+                kitRow.classList.add('hidden');
+            }
+
+            const pixRow = document.getElementById('cart-pix-discount-row');
+            if (totals.hasPixDiscount) {
+                pixRow.classList.remove('hidden');
+                document.getElementById('cart-pix-discount').textContent = `- ${formatBRL(totals.pixDiscount)}`;
+            } else {
+                pixRow.classList.add('hidden');
+            }
+
+            document.getElementById('cart-total').textContent = formatBRL(totals.finalTotal);
+
+            lucide.createIcons();
+        }
+
+        function sendOrderToWhatsApp() {
+            if (cart.length === 0) return;
+
+            const clientName = document.getElementById('client-name').value.trim();
+            const deliveryMethod = document.getElementById('delivery-method').value;
+            const clientAddress = document.getElementById('client-address').value.trim();
+            const paymentMethod = document.getElementById('payment-method').value;
+            const isGift = document.getElementById('is-gift-checkbox').checked;
+            const giftMessage = document.getElementById('gift-message-input').value.trim();
+
+            if (!clientName) {
+                showToast('Por favor, informe o seu nome para identificarmos o pedido.', 'warning');
+                document.getElementById('client-name').focus();
+                return;
+            }
+
+            if (deliveryMethod === 'Entrega' && !clientAddress) {
+                showToast('Por favor, informe o endereço ou bairro para entrega.', 'warning');
+                document.getElementById('client-address').focus();
+                return;
+            }
+
+            const totals = calculateTotals();
+
+            const itemsLines = cart.map(item => {
+                const p = PRODUCTS.find(prod => prod.id === item.id);
+                return `• ${item.qty}x ${p.name} (${formatBRL(p.price * item.qty)})`;
+            }).join('\n');
+
+            const messageParts = [
+                `🌙 *NOVO PEDIDO — MOON ALQUIMIA* ✨`,
+                ``,
+                `*Cliente:* ${clientName}`,
+                `*Recebimento:* ${deliveryMethod}`,
+                deliveryMethod === 'Entrega' ? `*Endereço:* ${clientAddress}` : null,
+                `*Forma de Pagamento:* ${paymentMethod}`,
+                ``,
+                `*Itens do Ritual:*`,
+                itemsLines,
+                ``,
+                `*Subtotal:* ${formatBRL(totals.subtotal)}`,
+                totals.hasKitDiscount ? `*Desconto Kit Ritual (10%):* -${formatBRL(totals.kitDiscount)}` : null,
+                totals.hasPixDiscount ? `*Desconto PIX (5%):* -${formatBRL(totals.pixDiscount)}` : null,
+                `*Total Estimado:* *${formatBRL(totals.finalTotal)}*`,
+                isGift ? `\n🎁 *Embalagem para Presente:* Sim\n💌 *Cartão:* "${giftMessage || 'Com carinho!'}"` : null,
+                ``,
+                `Aguardo a confirmação e disponibilidade! 🌿`
+            ].filter(Boolean).join('\n');
+
+            const encodedText = encodeURIComponent(messageParts);
+            const whatsappUrl = `https://wa.me/${STORE_CONFIG.whatsappNumber}?text=${encodedText}`;
+
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // =====================================================================
+        // NOTIFICAÇÕES TOAST SUAVES (SEM alert())
+        // =====================================================================
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+
+            const styleClass = type === 'warning'
+                ? 'bg-amber-900 text-amber-50 border-amber-400'
+                : 'bg-cocoa-800 text-cream-50 border-rosewood-400';
+
+            const iconName = type === 'warning' ? 'alert-circle' : 'sparkles';
+
+            toast.className = `pointer-events-auto flex items-center gap-2.5 px-4 py-3 rounded-2xl border-l-4 shadow-xl text-xs sm:text-sm font-medium transition-all duration-300 ${styleClass}`;
+            toast.innerHTML = `
+                <i data-lucide="${iconName}" class="w-4 h-4 text-rosewood-400 shrink-0"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transform = 'translateY(-6px)';
+                setTimeout(() => toast.remove(), 300);
+            }, 3200);
+        }
+    </script>
+</body>
+</html>
