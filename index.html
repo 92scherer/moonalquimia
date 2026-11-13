@@ -126,27 +126,27 @@
         <div class="absolute top-12 -right-24 w-80 h-80 rounded-full bg-sage-100/60 blur-3xl pointer-events-none"></div>
 
         <div class="relative max-w-4xl mx-auto px-4 sm:px-6 text-center flex flex-col items-center">
-            <!-- Logotipo Centralizado em Tamanho de Destaque -->
-            <div class="mb-5 flex items-center justify-center">
+            <!-- Logotipo Centralizado em Tamanho de Destaque (Dobro do tamanho anterior) -->
+            <div class="mb-6 flex items-center justify-center">
                 <img 
                     id="brand-logo"
                     src="logo.png" 
                     alt="Moon Alquimia - Cosméticos Naturais Artesanais" 
-                    class="h-44 sm:h-56 w-auto max-w-[88vw] sm:max-w-[460px] object-contain mx-auto rounded-3xl drop-shadow-sm transition-transform duration-500 hover:scale-[1.02]"
+                    class="h-80 sm:h-[28rem] w-auto max-w-[92vw] sm:max-w-[760px] object-contain mx-auto rounded-3xl drop-shadow-sm transition-transform duration-500 hover:scale-[1.02]"
                     onerror="this.style.display='none'; document.getElementById('logo-fallback').classList.remove('hidden');"
                 >
-                <!-- Fallback elegante em SVG botânico caso logo.png ainda não esteja na pasta -->
-                <div id="logo-fallback" class="hidden flex flex-col items-center justify-center bg-cream-50 border border-cream-300 px-10 py-7 rounded-full shadow-xs">
-                    <div class="w-20 h-20 rounded-full bg-rosewood-50 border border-rosewood-200 flex items-center justify-center text-rosewood-500 mb-2">
-                        <svg class="w-11 h-11" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <!-- Fallback elegante em SVG botânico caso logo.png ainda não esteja na pasta (ampliado proporcionalmente) -->
+                <div id="logo-fallback" class="hidden flex flex-col items-center justify-center bg-cream-50 border border-cream-300 px-16 py-12 sm:px-20 sm:py-14 rounded-full shadow-xs">
+                    <div class="w-36 h-36 sm:w-40 sm:h-40 rounded-full bg-rosewood-50 border border-rosewood-200 flex items-center justify-center text-rosewood-500 mb-4">
+                        <svg class="w-20 h-20 sm:w-24 sm:h-24" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M29 8a15 15 0 1 0 11 25.2A13 13 0 0 1 29 8Z"/>
                             <path d="M18 28c4-5 10-7 16-6-2 6-7 11-13 11"/>
                             <path d="M18 28c-3-4-4-9-2-14 5 2 8 6 8 11"/>
                             <circle cx="34" cy="13" r="1.5" fill="currentColor"/>
                         </svg>
                     </div>
-                    <span class="font-serif text-2xl font-bold tracking-wider text-cocoa-800">Moon Alquimia</span>
-                    <span class="text-[11px] uppercase tracking-[0.2em] text-rosewood-500 mt-0.5">Botânica &bull; Artesanal</span>
+                    <span class="font-serif text-4xl sm:text-5xl font-bold tracking-wider text-cocoa-800">Moon Alquimia</span>
+                    <span class="text-xs sm:text-sm uppercase tracking-[0.25em] text-rosewood-500 mt-1.5">Botânica &bull; Artesanal</span>
                 </div>
             </div>
 
